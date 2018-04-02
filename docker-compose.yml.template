@@ -1,0 +1,25 @@
+version: '2'
+
+services:
+    web:
+      image: nginx
+      volumes:
+       - ./piwik:/usr/share/nginx/html
+      ports:
+       - "8085:80"
+      environment:
+       - NGINX_PORT=80
+
+    mysql:
+      image: mysql:5.7
+      container_name: matamo-db
+      environment:
+        - MYSQL_DATABASE=piwik
+        - MYSQL_ROOT_PASSWORD=<root_passwd>
+        - MYSQL_USER=piwik
+        - MYSQL_PASSWORD=<piwik_passwd>
+      volumes:
+        - ./db:/var/lib/mysql
+      ports:
+        - "3306:3306"
+      restart: always
